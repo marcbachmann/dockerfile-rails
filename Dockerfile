@@ -3,7 +3,7 @@ MAINTAINER Marc Bachmann <marc.brookman@gmail.com>
 
 WORKDIR /
 
-RUN apt-get update -q \
+RUN apt-get update -q && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     software-properties-common python-software-properties build-essential \
     unzip curl wget git python
@@ -22,21 +22,15 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv C7917B12 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN /bin/bash -l -c 'gem install bundler rdoc foreman --no-ri --no-rdoc'
-RUN mkdir /gems && chmod 777 /gems
-ENV GEM_HOME /gems
+ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH
+RUN /bin/bash -l -c 'gem install foreman'
 
-# Add app user
 ADD ./ /app
-RUN useradd -ms /bin/bash app
-USER app
 WORKDIR /app
 EXPOSE 8080
 ENV PORT 8080
 
-VOLUME  ["/app", "/data", "/gems"]
-
-RUN apt-get autoremove && \
+RUN apt-get autoremove -y && \
     apt-get autoclean && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

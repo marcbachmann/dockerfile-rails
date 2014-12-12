@@ -3,7 +3,7 @@
 ## Build
 
 ```
-docker build -t suitart-rails:0.1 .
+docker build -t marcbachmann/rails:0.1 .
 ```
 
 ## Run
