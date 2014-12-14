@@ -23,6 +23,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv C7917B12 && \
     rm -rf /var/lib/apt/lists/*
 
 ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH
+ENV GEM_PATH /usr/local/bundle
 RUN /bin/bash -l -c 'gem install foreman'
 
 ADD ./ /app
