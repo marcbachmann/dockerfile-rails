@@ -26,11 +26,6 @@ ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH
 ENV GEM_PATH /usr/local/bundle
 RUN /bin/bash -l -c 'gem install foreman'
 
-ADD ./ /app
-WORKDIR /app
-EXPOSE 8080
-ENV PORT 8080
-
 RUN apt-get autoremove -y && \
     apt-get autoclean && \
     apt-get clean && \
